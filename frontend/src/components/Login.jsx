@@ -23,27 +23,30 @@ const Login = () => {
         // handle credition response (JWT response): https://developers.google.com/identity/gsi/web/guides/handle-credential-responses-js-functions
         let responsePayload = decodeJwtResponse(response.credential);
 
-        console.log("ID: " + responsePayload.sub);
-        console.log('Full Name: ' + responsePayload.name);
-        console.log('Given Name: ' + responsePayload.given_name);
-        console.log('Family Name: ' + responsePayload.family_name);
-        console.log("Image URL: " + responsePayload.picture);
-        console.log("Email: " + responsePayload.email);
-        //localStorage.setItem('user', JSON.stringify(response.profileObj));
+        // console.log("ID: " + responsePayload.sub);
+        // console.log('Full Name: ' + responsePayload.name);
+        // console.log('Given Name: ' + responsePayload.given_name);
+        // console.log('Family Name: ' + responsePayload.family_name);
+        // console.log("Image URL: " + responsePayload.picture);
+        // console.log("Email: " + responsePayload.email);
+        
+        localStorage.setItem('user', JSON.stringify(responsePayload));
 
-        // const {name, googleId, imageUrl} = response.profileObj;
+        const name = responsePayload.name;
+        const googleId = responsePayload.sub;
+        const imageUrl = responsePayload.picture;
 
-        // const doc = {
-        //     _id: googleId,
-        //     _type: 'user',
-        //     userName: name,
-        //     image: imageUrl,
-        // }
+        const doc = {
+            _id: googleId,
+            _type: 'user',
+            userName: name,
+            image: imageUrl,
+        }
 
-        // client.createIfNotExists(doc)
-        //     .then(() => {
-        //         navigate('/', {replace: true})
-        //     })
+        client.createIfNotExists(doc)
+            .then(() => {
+                navigate('/', {replace: true})
+            })
     }
     return (
         
